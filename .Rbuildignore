@@ -1,6 +1,7 @@
 ^nativeshadr\.Rproj$
 ^\.Rproj\.user$
+^\.quarto$
 ^\.vscode$
 ^LICENSE\.md$
-^README\.Rmd$
+^README\.qmd$
 ^cran-comments\.md$
