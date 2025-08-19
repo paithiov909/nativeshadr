@@ -3,4 +3,5 @@
 export(nr_new)
 import(nara)
 importFrom(Rcpp,sourceCpp)
+importFrom(RcppParallel,RcppParallelLibs)
 useDynLib(nativeshadr, .registration = TRUE)

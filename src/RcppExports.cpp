@@ -12,26 +12,26 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // test_as_is
-Rcpp::IntegerVector test_as_is(Rcpp::IntegerMatrix nr, Rcpp::List uniforms);
-RcppExport SEXP _nativeshadr_test_as_is(SEXP nrSEXP, SEXP uniformsSEXP) {
+Rcpp::IntegerVector test_as_is(Rcpp::IntegerMatrix nr, Rcpp::List uni);
+RcppExport SEXP _nativeshadr_test_as_is(SEXP nrSEXP, SEXP uniSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::IntegerMatrix >::type nr(nrSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type uniforms(uniformsSEXP);
-    rcpp_result_gen = Rcpp::wrap(test_as_is(nr, uniforms));
+    Rcpp::traits::input_parameter< Rcpp::List >::type uni(uniSEXP);
+    rcpp_result_gen = Rcpp::wrap(test_as_is(nr, uni));
     return rcpp_result_gen;
 END_RCPP
 }
 // test_gradient
-Rcpp::IntegerVector test_gradient(Rcpp::IntegerMatrix nr, Rcpp::List uniforms);
-RcppExport SEXP _nativeshadr_test_gradient(SEXP nrSEXP, SEXP uniformsSEXP) {
+Rcpp::IntegerVector test_gradient(Rcpp::IntegerMatrix nr, Rcpp::List uni);
+RcppExport SEXP _nativeshadr_test_gradient(SEXP nrSEXP, SEXP uniSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::IntegerMatrix >::type nr(nrSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type uniforms(uniformsSEXP);
-    rcpp_result_gen = Rcpp::wrap(test_gradient(nr, uniforms));
+    Rcpp::traits::input_parameter< Rcpp::List >::type uni(uniSEXP);
+    rcpp_result_gen = Rcpp::wrap(test_gradient(nr, uni));
     return rcpp_result_gen;
 END_RCPP
 }

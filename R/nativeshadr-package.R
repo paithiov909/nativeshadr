@@ -1,6 +1,7 @@
 ## usethis namespace: start
 #' @import nara
 #' @importFrom Rcpp sourceCpp
+#' @importFrom RcppParallel RcppParallelLibs
 #' @useDynLib nativeshadr, .registration = TRUE
 ## usethis namespace: end
 #' @keywords internal

@@ -4,3 +4,4 @@ PKG_CXXFLAGS = -DHLSLPP_FEATURE_TRANSFORM \
   -I../inst/include/hlsl++/platforms \
   -I../inst/include/hlsl++/swizzle \
   -I../inst/include/hlsl++/transform
+PKG_LIBS += $(shell ${R_HOME}/bin/Rscript -e "RcppParallel::RcppParallelLibs()")

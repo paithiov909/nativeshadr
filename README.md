@@ -23,10 +23,11 @@ Typical usage of nativeshadr is as follows:
 
 - Write a pixel shader as Rcpp codes.
   - A pixel shader here is expected to have the signature
-    `shader(int2 wh, Rcpp::IntegerMatrix nr, Rcpp::List uniforms)`,
+    `shader(int2 wh, RcppParallel::RMatrix<int> nr, const vvd& uniforms)`,
     where `wh` is the position of a pixel in the texture, `nr` is a
     ‘nativeRaster’ object that represents the texture, and `uniforms` is
-    a list of uniforms.
+    a `std::vector<std::vector<double>>` object that represents a list
+    of uniforms.
   - The pixel shader should return an `uint32_t` value that represents
     the color of the pixel as the same manner in ‘nativeRaster’ objects.
 - Wrap the pixel shader and export it.
@@ -46,22 +47,23 @@ and compile them with `Rcpp::sourceCpp()`.
 library(nara) ## https://github.com/coolbutuseless/nara
 
 Rcpp::sourceCpp(code = R"{
-// [[Rcpp::depends(nativeshadr)]]
+// [[Rcpp::depends(RcppParallel, nativeshadr)]]
 #include <nativeshadr.h>
 
-uint32_t gradient(int2 wh, Rcpp::IntegerMatrix nr, Rcpp::List uniforms) {
+uint32_t gradient(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
   float2 uv = float2(wh) / float2(nr.ncol(), nr.nrow());
   float4 col = float4(uv.x, uv.y, .6, 1);
   return int4_to_icol(clamp(col * 255, 0, 255));
 }
 
 // [[Rcpp::export]]
-Rcpp::IntegerVector test_gradient(Rcpp::IntegerMatrix nr, Rcpp::List uniforms) {
+Rcpp::IntegerVector test_gradient(Rcpp::IntegerMatrix nr) {
+  const vvd uniforms;
   return vectorize_shader(gradient)(nr, uniforms);
 }
 }")
 
-test_gradient(nara::nr_new(640, 360), list()) |>
+test_gradient(nara::nr_new(640, 360)) |>
   plot()
 ```
 
@@ -72,12 +74,12 @@ style="width:100.0%" />
 
 ``` r
 Rcpp::sourceCpp(code = R"{
-// [[Rcpp::depends(nativeshadr)]]
+// [[Rcpp::depends(RcppParallel, nativeshadr)]]
 #include <nativeshadr.h>
 
-uint32_t ring(int2 wh, Rcpp::IntegerMatrix nr, Rcpp::List uniforms) {
-  Rcpp::NumericVector mouse = uniforms["mouse"];
-  Rcpp::NumericVector time = uniforms["time"];
+uint32_t ring(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
+  const std::vector<double>& mouse = uniforms[0];
+  const std::vector<double>& time = uniforms[1];
 
   float2 resolution = float2(nr.ncol(), nr.nrow());
   float2 m = float2(mouse[0] * 2.0 - 1.0, -1.0 * mouse[1] * 2.0 + 1.0);
@@ -89,7 +91,8 @@ uint32_t ring(int2 wh, Rcpp::IntegerMatrix nr, Rcpp::List uniforms) {
 }
 
 // [[Rcpp::export]]
-Rcpp::IntegerVector test_ring(Rcpp::IntegerMatrix nr, Rcpp::List uniforms) {
+Rcpp::IntegerVector test_ring(Rcpp::IntegerMatrix nr, Rcpp::List uni) {
+  const vvd uniforms = {uni["mouse"], uni["time"]};
   return vectorize_shader(ring)(nr, uniforms);
 }
 }")
@@ -110,7 +113,7 @@ fig_path <-
     delay = 1 / 12
   )
 Sys.time() - timing
-#> Time difference of 9.979378 secs
+#> Time difference of 0.7881124 secs
 ```
 
 ![example-animated-ring](man/figures/README-example-animated-ring.gif)
