@@ -23,22 +23,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// test
-Rcpp::IntegerVector test(Rcpp::IntegerMatrix nr, Rcpp::List uniforms);
-RcppExport SEXP _nativeshadr_test(SEXP nrSEXP, SEXP uniformsSEXP) {
+// test_gradient
+Rcpp::IntegerVector test_gradient(Rcpp::IntegerMatrix nr, Rcpp::List uniforms);
+RcppExport SEXP _nativeshadr_test_gradient(SEXP nrSEXP, SEXP uniformsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::IntegerMatrix >::type nr(nrSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type uniforms(uniformsSEXP);
-    rcpp_result_gen = Rcpp::wrap(test(nr, uniforms));
+    rcpp_result_gen = Rcpp::wrap(test_gradient(nr, uniforms));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
     {"_nativeshadr_test_as_is", (DL_FUNC) &_nativeshadr_test_as_is, 2},
-    {"_nativeshadr_test", (DL_FUNC) &_nativeshadr_test, 2},
+    {"_nativeshadr_test_gradient", (DL_FUNC) &_nativeshadr_test_gradient, 2},
     {NULL, NULL, 0}
 };
 

@@ -5,7 +5,7 @@ test_as_is <- function(nr, uniforms) {
     .Call(`_nativeshadr_test_as_is`, nr, uniforms)
 }
 
-test <- function(nr, uniforms) {
-    .Call(`_nativeshadr_test`, nr, uniforms)
+test_gradient <- function(nr, uniforms) {
+    .Call(`_nativeshadr_test_gradient`, nr, uniforms)
 }
 

@@ -17,11 +17,10 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![CRAN status](https://www.r-pkg.org/badges/version/nativeshadr)](https://CRAN.R-project.org/package=nativeshadr)
 <!-- badges: end -->
 
 
-* シェーダーは`xy`と`texture`, `uniforms`を取り、`icol (uint32_t)`を返す関数
+* シェーダーは`wh`と`texture`, `uniforms`を取り、`icol (uint32_t)`を返す関数
 * これを`vectorize_shader(shader)`として、`Rcpp::IntegerMatrix`を引数に取って`Rcpp::IntegerVector`を返す関数を生成する
 
 ```{r}
@@ -34,7 +33,7 @@ test_as_is(img, list()) |>
   plot()
 
 grid::grid.newpage()
-test(nara::nr_new(320, 240, fill = "gray20"), list()) |>
+test_gradient(nara::nr_new(320, 240, fill = "gray20"), list()) |>
   plot()
 ```
 

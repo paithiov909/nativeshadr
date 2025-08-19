@@ -1,17 +1,26 @@
 Package: nativeshadr
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R:
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: file LICENSE
+Title: Introduction of 'HLSL' Syntax to 'Rcpp'
+Version: 0.0.1
+Authors@R: c(
+    person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre")),
+    person("Emilio", "López", role = "cph",
+           comment = "Author of the 'HLSL++' library")
+  )
+Description: Brings 'HLSL'-like syntax to 'Rcpp' codes via the 'HLSL++'
+    library <https://github.com/redorav/hlslpp>.
+License: MIT + file LICENSE
+Imports:
+    nara,
+    Rcpp
 Suggests:
-    testthat (>= 3.0.0)
+    fastpng,
+    testthat (>= 3.0.0),
+    vdiffr
+LinkingTo:
+    Rcpp
+Remotes:
+    coolbutuseless/nara
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-LinkingTo:
-    Rcpp
-Imports:
-    Rcpp

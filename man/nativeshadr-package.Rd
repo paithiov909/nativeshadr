@@ -4,12 +4,17 @@
 \name{nativeshadr-package}
 \alias{nativeshadr}
 \alias{nativeshadr-package}
-\title{nativeshadr: What the Package Does (One Line, Title Case)}
+\title{nativeshadr: Introduction of 'HLSL' Syntax to 'Rcpp'}
 \description{
-What the package does (one paragraph).
+Brings 'HLSL'-like syntax to 'Rcpp' codes via the 'HLSL++' library \url{https://github.com/redorav/hlslpp}.
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com}
+\strong{Maintainer}: Akiru Kato \email{paithiov909@gmail.com}
+
+Other contributors:
+\itemize{
+  \item Emilio López (Author of the 'HLSL++' library) [copyright holder]
+}
 
 }
 \keyword{internal}
