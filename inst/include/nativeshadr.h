@@ -14,14 +14,14 @@ inline uint32_t int4_to_icol(int4 col) {
 }
 
 inline int4 texture_eval(const Rcpp::IntegerMatrix& nr,
-                         const std::vector<int>& hw) {
-  if (hw.size() != 2) {
+                         const std::vector<int>& wh) {
+  if (wh.size() != 2) {
     throw std::runtime_error("hw must have length 2");
   }
   const auto dim = std::make_tuple(nr.nrow(), nr.ncol());
-  const auto h = std::clamp(hw[0], 0, std::get<0>(dim));
-  const auto w = std::clamp(hw[1], 0, std::get<1>(dim));
-  const int4 ret = icol_to_int4(nr[h + w * std::get<0>(dim)]);
+  const auto i = std::clamp(wh[1], 0, std::get<0>(dim)); // height
+  const auto j = std::clamp(wh[0], 0, std::get<1>(dim)); // width
+  const int4 ret = icol_to_int4(nr[j + i * std::get<1>(dim)]);
   return ret;
 }
 
@@ -35,7 +35,7 @@ vectorize_shader(
     Rcpp::IntegerVector ret(std::get<0>(dim) * std::get<1>(dim));
     for (int i = 0; i < std::get<0>(dim); i++) { // height
       for (int j = 0; j < std::get<1>(dim); j++) { // width
-        ret[i + j * std::get<0>(dim)] = shader(nr, std::vector<int>{i, j}, uniforms);
+        ret[j + i * std::get<1>(dim)] = shader(nr, std::vector<int>{j, i}, uniforms);
       }
     }
     ret.attr("dim") = Rcpp::IntegerVector{std::get<0>(dim), std::get<1>(dim)};
