@@ -21,9 +21,8 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 
-* シェーダーは`texture`と`xy`, `uniforms`を取り、`icol`を返す関数
-* これを`vectorize_shader(shader)`として、`Rcpp::IntegerMatrix`を引数に取って`Rcpp::IntegerMatrix`を返す関数を生成する
-*
+* シェーダーは`xy`と`texture`, `uniforms`を取り、`icol (uint32_t)`を返す関数
+* これを`vectorize_shader(shader)`として、`Rcpp::IntegerMatrix`を引数に取って`Rcpp::IntegerVector`を返す関数を生成する
 
 ```{r}
 devtools::document()
