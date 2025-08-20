@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![nativeshadr status
-badge](https://paithiov909.r-universe.dev/nativeshadr/badges/version.png)](https://paithiov909.r-universe.dev/nativeshadr)
+badge](https://paithiov909.r-universe.dev/nativeshadr/badges/version)](https://paithiov909.r-universe.dev/nativeshadr)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
