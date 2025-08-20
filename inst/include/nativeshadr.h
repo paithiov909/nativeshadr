@@ -30,7 +30,7 @@ inline std::function<Rcpp::IntegerVector(Rcpp::IntegerMatrix, const vvd&)>
 vectorize_shader(
     std::function<uint32_t(int2, RcppParallel::RMatrix<int>, const vvd&)>
         shader) {
-  struct Shader : Worker {
+  struct Shader : RcppParallel::Worker {
     std::function<uint32_t(int2, RcppParallel::RMatrix<int>, const vvd&)>
         shader;
     const RcppParallel::RMatrix<int> nr;
@@ -53,11 +53,10 @@ vectorize_shader(
   return [shader](Rcpp::IntegerMatrix nr, const vvd& uniforms) {
     const auto dim = std::make_tuple(nr.nrow(), nr.ncol());  // height, width
 
-    Rcpp::IntegerVector ret(std::get<0>(dim) * std::get<1>(dim));
-    Shader worker(shader, nr, ret, uniforms);
+    Rcpp::IntegerVector out(std::get<0>(dim) * std::get<1>(dim));
+    Shader worker(shader, nr, out, uniforms);
     RcppParallel::parallelFor(0, std::get<0>(dim), worker);
 
-    Rcpp::IntegerVector out(ret.begin(), ret.end());
     out.attr("dim") = Rcpp::IntegerVector{std::get<0>(dim), std::get<1>(dim)};
     out.attr("class") = "nativeRaster";
     return out;
