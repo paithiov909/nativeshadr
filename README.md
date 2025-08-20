@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![nativeshadr status
+badge](https://paithiov909.r-universe.dev/nativeshadr/badges/version.png)](https://paithiov909.r-universe.dev/nativeshadr)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
@@ -68,6 +70,42 @@ test_gradient(nara::nr_new(640, 360)) |>
 ```
 
 <img src="man/figures/README-example-simple-gradient-1.png"
+style="width:100.0%" />
+
+## Color manipulation
+
+``` r
+Rcpp::sourceCpp(code = R"{
+// [[Rcpp::depends(RcppParallel, nativeshadr)]]
+#include <nativeshadr.h>
+
+uint32_t sepia(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
+  const std::vector<double>& intensity = uniforms[0];
+  const std::vector<double>& depth = uniforms[1];
+
+  float4 texture = texture_eval(nr, wh);
+  float3 rgb = clamp(float3(
+    texture.x + depth[0] * 2.0,
+    texture.y + depth[0],
+    (texture.x + texture.y + texture.z) / 3.0
+  ), 0, 255);
+  rgb.z = clamp(rgb.z - rgb.z * intensity[0], 0, 255);
+  return int4_to_icol(clamp(float4(rgb, texture.w), 0, 255));
+}
+
+// [[Rcpp::export]]
+Rcpp::IntegerVector test_sepia(Rcpp::IntegerMatrix nr, Rcpp::List uni) {
+  const vvd uniforms = {uni["intensity"], uni["depth"]};
+  return vectorize_shader(sepia)(nr, uniforms);
+}
+}")
+
+fastpng::read_png(system.file("images/river.png", package = "nativeshadr"), type = "nativeraster") |>
+  test_sepia(list(intensity = .6, depth = 60.0)) |>
+  plot()
+```
+
+<img src="man/figures/README-example-color-manipulation-1.png"
 style="width:100.0%" />
 
 ### Waved ring
