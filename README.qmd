@@ -67,7 +67,7 @@ test_gradient(nara::nr_new(640, 360)) |>
   plot()
 ```
 
-## Color manipulation
+### Color manipulation
 
 ```{r}
 #| label: example-color-manipulation

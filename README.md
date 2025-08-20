@@ -72,7 +72,7 @@ test_gradient(nara::nr_new(640, 360)) |>
 <img src="man/figures/README-example-simple-gradient-1.png"
 style="width:100.0%" />
 
-## Color manipulation
+### Color manipulation
 
 ``` r
 Rcpp::sourceCpp(code = R"{
