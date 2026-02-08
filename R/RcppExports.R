@@ -9,3 +9,31 @@ test_gradient <- function(nr, uni) {
     .Call(`_nativeshadr_test_gradient`, nr, uni)
 }
 
+shdr_sandy <- function(nr, lacunarity, gain, intensity) {
+    .Call(`_nativeshadr_shdr_sandy`, nr, lacunarity, gain, intensity)
+}
+
+shdr_deform <- function(nr, uni) {
+    .Call(`_nativeshadr_shdr_deform`, nr, uni)
+}
+
+shdr_godray <- function(nr, uni) {
+    .Call(`_nativeshadr_shdr_godray`, nr, uni)
+}
+
+shdr_rgb_split <- function(nr, uni) {
+    .Call(`_nativeshadr_shdr_rgb_split`, nr, uni)
+}
+
+shdr_ripple <- function(nr, uni) {
+    .Call(`_nativeshadr_shdr_ripple`, nr, uni)
+}
+
+shdr_shockwave <- function(nr, uni) {
+    .Call(`_nativeshadr_shdr_shockwave`, nr, uni)
+}
+
+shdr_twist <- function(nr, uni, padding) {
+    .Call(`_nativeshadr_shdr_twist`, nr, uni, padding)
+}
+

@@ -35,10 +35,104 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// shdr_sandy
+Rcpp::IntegerVector shdr_sandy(Rcpp::IntegerMatrix nr, float lacunarity, float gain, float intensity);
+RcppExport SEXP _nativeshadr_shdr_sandy(SEXP nrSEXP, SEXP lacunaritySEXP, SEXP gainSEXP, SEXP intensitySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::IntegerMatrix >::type nr(nrSEXP);
+    Rcpp::traits::input_parameter< float >::type lacunarity(lacunaritySEXP);
+    Rcpp::traits::input_parameter< float >::type gain(gainSEXP);
+    Rcpp::traits::input_parameter< float >::type intensity(intensitySEXP);
+    rcpp_result_gen = Rcpp::wrap(shdr_sandy(nr, lacunarity, gain, intensity));
+    return rcpp_result_gen;
+END_RCPP
+}
+// shdr_deform
+Rcpp::IntegerVector shdr_deform(Rcpp::IntegerMatrix nr, Rcpp::List uni);
+RcppExport SEXP _nativeshadr_shdr_deform(SEXP nrSEXP, SEXP uniSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::IntegerMatrix >::type nr(nrSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type uni(uniSEXP);
+    rcpp_result_gen = Rcpp::wrap(shdr_deform(nr, uni));
+    return rcpp_result_gen;
+END_RCPP
+}
+// shdr_godray
+Rcpp::IntegerVector shdr_godray(Rcpp::IntegerMatrix nr, Rcpp::List uni);
+RcppExport SEXP _nativeshadr_shdr_godray(SEXP nrSEXP, SEXP uniSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::IntegerMatrix >::type nr(nrSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type uni(uniSEXP);
+    rcpp_result_gen = Rcpp::wrap(shdr_godray(nr, uni));
+    return rcpp_result_gen;
+END_RCPP
+}
+// shdr_rgb_split
+Rcpp::IntegerVector shdr_rgb_split(Rcpp::IntegerMatrix nr, Rcpp::List uni);
+RcppExport SEXP _nativeshadr_shdr_rgb_split(SEXP nrSEXP, SEXP uniSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::IntegerMatrix >::type nr(nrSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type uni(uniSEXP);
+    rcpp_result_gen = Rcpp::wrap(shdr_rgb_split(nr, uni));
+    return rcpp_result_gen;
+END_RCPP
+}
+// shdr_ripple
+Rcpp::IntegerVector shdr_ripple(Rcpp::IntegerMatrix nr, Rcpp::List uni);
+RcppExport SEXP _nativeshadr_shdr_ripple(SEXP nrSEXP, SEXP uniSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::IntegerMatrix >::type nr(nrSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type uni(uniSEXP);
+    rcpp_result_gen = Rcpp::wrap(shdr_ripple(nr, uni));
+    return rcpp_result_gen;
+END_RCPP
+}
+// shdr_shockwave
+Rcpp::IntegerVector shdr_shockwave(Rcpp::IntegerMatrix nr, Rcpp::List uni);
+RcppExport SEXP _nativeshadr_shdr_shockwave(SEXP nrSEXP, SEXP uniSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::IntegerMatrix >::type nr(nrSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type uni(uniSEXP);
+    rcpp_result_gen = Rcpp::wrap(shdr_shockwave(nr, uni));
+    return rcpp_result_gen;
+END_RCPP
+}
+// shdr_twist
+Rcpp::IntegerVector shdr_twist(Rcpp::IntegerMatrix nr, Rcpp::List uni, double padding);
+RcppExport SEXP _nativeshadr_shdr_twist(SEXP nrSEXP, SEXP uniSEXP, SEXP paddingSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::IntegerMatrix >::type nr(nrSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type uni(uniSEXP);
+    Rcpp::traits::input_parameter< double >::type padding(paddingSEXP);
+    rcpp_result_gen = Rcpp::wrap(shdr_twist(nr, uni, padding));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_nativeshadr_test_as_is", (DL_FUNC) &_nativeshadr_test_as_is, 2},
     {"_nativeshadr_test_gradient", (DL_FUNC) &_nativeshadr_test_gradient, 2},
+    {"_nativeshadr_shdr_sandy", (DL_FUNC) &_nativeshadr_shdr_sandy, 4},
+    {"_nativeshadr_shdr_deform", (DL_FUNC) &_nativeshadr_shdr_deform, 2},
+    {"_nativeshadr_shdr_godray", (DL_FUNC) &_nativeshadr_shdr_godray, 2},
+    {"_nativeshadr_shdr_rgb_split", (DL_FUNC) &_nativeshadr_shdr_rgb_split, 2},
+    {"_nativeshadr_shdr_ripple", (DL_FUNC) &_nativeshadr_shdr_ripple, 2},
+    {"_nativeshadr_shdr_shockwave", (DL_FUNC) &_nativeshadr_shdr_shockwave, 2},
+    {"_nativeshadr_shdr_twist", (DL_FUNC) &_nativeshadr_shdr_twist, 3},
     {NULL, NULL, 0}
 };
 

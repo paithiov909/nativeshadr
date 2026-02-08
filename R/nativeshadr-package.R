@@ -14,3 +14,7 @@
 nr_new <- function(width, height, fill = "white") {
   nara::nr_new(width, height, fill)
 }
+
+clamp <- function(x, min = 0, max = 1) {
+  pmin(pmax(x, min), max)
+}
