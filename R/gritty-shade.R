@@ -10,5 +10,10 @@ gritty_shade <- function(nr, lacunarity = 2, gain = 1.2, intensity = 0.4) {
   if (!all(is.finite(c(lacunarity, gain, intensity)))) {
     cli::cli_abort("uniforms must be finite numerics.")
   }
-  shdr_sandy(nr, as.double(lacunarity[1]), as.double(gain[1]), as.double(intensity[1]))
+  shdr_sandy(
+    nr,
+    as.double(lacunarity[1]),
+    as.double(gain[1]),
+    as.double(intensity[1])
+  )
 }

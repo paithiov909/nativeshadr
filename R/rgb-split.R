@@ -7,7 +7,10 @@
 #' @returns A `nativeRaster` object.
 #' @export
 rgb_split <- function(nr, r = c(.01, 0), g = c(0, .01), b = c(0, 0)) {
-  if (!all(is.finite(c(r, g, b))) || !all(length(r) == 2, length(g) == 2, length(b) == 2)) {
+  if (
+    !all(is.finite(c(r, g, b))) ||
+      !all(length(r) == 2, length(g) == 2, length(b) == 2)
+  ) {
     cli::cli_abort("uniforms must be finite numerics length 2.")
   }
   uniforms <- list(

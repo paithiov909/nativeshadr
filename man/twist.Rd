@@ -4,7 +4,7 @@
 \alias{twist}
 \title{Twist effect}
 \usage{
-twist(nr, offset = dim(nr)/2, angle = pi, radius = 100, padding = 20)
+twist(nr, offset = rev(dim(nr))/2, angle = pi, radius = 100, padding = 20)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}

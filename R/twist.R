@@ -10,18 +10,18 @@
 #' @export
 twist <- function(
   nr,
-  offset = dim(nr) / 2,
+  offset = rev(dim(nr)) / 2,
   angle = pi,
   radius = 100,
   padding = 20
 ) {
-  if (!all(is.finite(c(angle, offset[1:2], radius, padding, padding)))) {
+  if (!all(is.finite(c(angle, offset[1:2], radius, padding)))) {
     cli::cli_abort("uniforms must be finite numerics.")
   }
   uniforms <-
     list(
       uTwist = as.double(c(radius[1], angle[1])),
-      uOffset = as.double(offset)
+      uOffset = as.double(offset[1:2])
     )
   shdr_twist(nr, uniforms, as.double(padding[1]))
 }

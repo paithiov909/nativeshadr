@@ -211,9 +211,9 @@ inline uint32_t shockwave(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
   const float uBrightness = uWave[2];
   const float uRadius = uWave[3];
 
-  const float halfWavelength = uWavelength * 0.5 / uInputSize[0];
-  const float maxRadius = uRadius / uInputSize[0];
-  const float currentRadius = uTime[0] * uSpeed[0] / uInputSize[0];
+  const float halfWavelength = uWavelength * 0.5 / max(uInputSize[0], uInputSize[1]);
+  const float maxRadius = uRadius / max(uInputSize[0], uInputSize[1]);
+  const float currentRadius = uTime[0] * uSpeed[0] / max(uInputSize[0], uInputSize[1]);
 
   const float2 vTextureCoord = float2(wh) / float2(nr.ncol(), nr.nrow());
 
@@ -228,8 +228,8 @@ inline uint32_t shockwave(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
   }
 
   float2 dir =
-      float2(vTextureCoord - uCenter[0] / float2(uInputSize[0], uInputSize[1]));
-  dir.y *= uInputSize[0] / uInputSize[1];
+      float2(vTextureCoord - float2(uCenter[0], uCenter[1]) / float2(uInputSize[0], uInputSize[1]));
+  dir.y *= uInputSize[1] / uInputSize[0];
   float dist = length(dir);
 
   if (dist <= 0.0 || dist < currentRadius - halfWavelength ||

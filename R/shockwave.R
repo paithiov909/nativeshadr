@@ -18,7 +18,7 @@
 #' @export
 shockwave <- function(
   nr,
-  center = dim(nr) / 2,
+  center = rev(dim(nr)) / 2,
   speed = log(min(dim(nr))),
   amp = 50,
   wave_length = 160,
