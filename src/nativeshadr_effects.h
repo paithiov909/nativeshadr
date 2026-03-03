@@ -83,11 +83,12 @@ inline float1 pnoise(float3 P, float3 rep) {
   float1 n_xyz = lerp(n_yz.x, n_yz.y, fade_xyz.x);
   return 2.2 * n_xyz;
 }
-inline float1 turb(float3 P, float3 rep, float lacunarity, float gain) {
+inline float1 turb(float octaves, float3 P, float3 rep, float lacunarity,
+                   float gain) {
   float sum = 0.0;
   float sc = 1.0;
   float totalgain = 1.0;
-  for (float i = 0.0; i < 6.0; i++) {
+  for (float i = 0.0; i < octaves; i++) {
     sum += totalgain * pnoise(P * sc, rep);
     sc *= lacunarity;
     totalgain *= gain;
@@ -218,7 +219,7 @@ inline uint32_t godray(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
   const std::vector<double> uAspect = uniforms[3];      // float
   const std::vector<double> uTime = uniforms[4];        // float
   const std::vector<double> uRay = uniforms[5];         // vec3
-  // const std::vector<double> uInputSize = uniforms[6];   // vec4
+  const std::vector<double> uOctaves = uniforms[6];     // float
 
   bool parallel = (uParallel[0] > 0.5);
   float2 dim = float2(uDimensions[0], uDimensions[1]);
@@ -244,10 +245,12 @@ inline uint32_t godray(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
   float1 gain = uRay[0];
   float1 lacunarity = uRay[1];
   float1 alpha = uRay[2];
+  float1 octaves = uOctaves[0];
 
   float3 dir = float3(d, d, 0.0);
-  float1 noise = Perlin::turb(dir + float3(time, 0.0, 62.1 + time) * 0.05,
-                              float3(480.0, 320.0, 480.0), lacunarity, gain);
+  float1 noise =
+      Perlin::turb(octaves, dir + float3(time, 0.0, 62.1 + time) * 0.05,
+                   float3(480.0, 320.0, 480.0), lacunarity, gain);
   noise = lerp(noise, 0.0, 0.3);
   // fade vertically
   float4 mist = float4(noise.xxx * (1.0 - coord.y), 1.0);

@@ -9,7 +9,7 @@ retro_filter(nr, asp = rev(dim(nr)/100), distort = TRUE, time = 0)
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{asp}{A numeric vector of length 2; factor to change the offset of vignette effect.}
+\item{asp}{A numeric vector of length 2; factor to scale the offset of vignette effect.}
 
 \item{distort}{A logical scalar; whether to apply barrel distortion.}
 

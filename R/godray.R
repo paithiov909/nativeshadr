@@ -10,6 +10,7 @@
 #' @param gain A numeric scalar; the gain of the effect.
 #' @param lacunarity A numeric scalar; the lacunarity of the effect.
 #' @param alpha A numeric scalar; the alpha of the effect.
+#' @param octaves A numeric scalar; the octaves of turbulence.
 #' @param time A numeric scalar; ellapsed time.
 #' @returns A `nativeRaster` object.
 #' @export
@@ -21,9 +22,20 @@ godray <- function(
   gain = 0.5,
   lacunarity = 2.5,
   alpha = 1,
-  time = 1
+  octaves = 5,
+  time = 0
 ) {
-  if (!all(is.finite(c(angle, center[1:2], gain, lacunarity, alpha, time)))) {
+  if (
+    !all(is.finite(c(
+      angle,
+      center[1:2],
+      gain,
+      lacunarity,
+      alpha,
+      octaves,
+      time
+    )))
+  ) {
     cli::cli_abort("uniforms must be finite numerics.")
   }
   uniforms <- list(
@@ -33,6 +45,7 @@ godray <- function(
       as.double(center[1:2])
     },
     uRay = as.double(c(gain[1], lacunarity[1], alpha[1])),
+    uOctaves = as.double(octaves[1]),
     uTime = as.double(time[1]),
     uParallel = if (parallel) 1 else 0
   )

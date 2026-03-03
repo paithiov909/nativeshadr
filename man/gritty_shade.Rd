@@ -4,7 +4,14 @@
 \alias{gritty_shade}
 \title{Multiply turbulence to the image}
 \usage{
-gritty_shade(nr, lacunarity = 2, gain = 1.2, intensity = 0.4)
+gritty_shade(
+  nr,
+  lacunarity = 2,
+  gain = 1.2,
+  intensity = 0.4,
+  octaves = 5,
+  time = 0
+)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
@@ -14,6 +21,10 @@ gritty_shade(nr, lacunarity = 2, gain = 1.2, intensity = 0.4)
 \item{gain}{A numeric scalar; the gain of the effect.}
 
 \item{intensity}{A numeric scalar; the intensity of the effect.}
+
+\item{octaves}{A numeric scalar; the octaves of turbulence.}
+
+\item{time}{A numeric scalar; ellapsed time.}
 }
 \value{
 A \code{nativeRaster} object.

@@ -36,8 +36,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // shdr_sandy
-Rcpp::IntegerVector shdr_sandy(Rcpp::IntegerMatrix nr, float lacunarity, float gain, float intensity);
-RcppExport SEXP _nativeshadr_shdr_sandy(SEXP nrSEXP, SEXP lacunaritySEXP, SEXP gainSEXP, SEXP intensitySEXP) {
+Rcpp::IntegerVector shdr_sandy(Rcpp::IntegerMatrix nr, float lacunarity, float gain, float intensity, float octaves, float time);
+RcppExport SEXP _nativeshadr_shdr_sandy(SEXP nrSEXP, SEXP lacunaritySEXP, SEXP gainSEXP, SEXP intensitySEXP, SEXP octavesSEXP, SEXP timeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -45,7 +45,9 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< float >::type lacunarity(lacunaritySEXP);
     Rcpp::traits::input_parameter< float >::type gain(gainSEXP);
     Rcpp::traits::input_parameter< float >::type intensity(intensitySEXP);
-    rcpp_result_gen = Rcpp::wrap(shdr_sandy(nr, lacunarity, gain, intensity));
+    Rcpp::traits::input_parameter< float >::type octaves(octavesSEXP);
+    Rcpp::traits::input_parameter< float >::type time(timeSEXP);
+    rcpp_result_gen = Rcpp::wrap(shdr_sandy(nr, lacunarity, gain, intensity, octaves, time));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -150,7 +152,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_nativeshadr_test_as_is", (DL_FUNC) &_nativeshadr_test_as_is, 2},
     {"_nativeshadr_test_gradient", (DL_FUNC) &_nativeshadr_test_gradient, 2},
-    {"_nativeshadr_shdr_sandy", (DL_FUNC) &_nativeshadr_shdr_sandy, 4},
+    {"_nativeshadr_shdr_sandy", (DL_FUNC) &_nativeshadr_shdr_sandy, 6},
     {"_nativeshadr_shdr_asciifilter", (DL_FUNC) &_nativeshadr_shdr_asciifilter, 2},
     {"_nativeshadr_shdr_deform", (DL_FUNC) &_nativeshadr_shdr_deform, 2},
     {"_nativeshadr_shdr_godray", (DL_FUNC) &_nativeshadr_shdr_godray, 2},

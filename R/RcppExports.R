@@ -9,8 +9,8 @@ test_gradient <- function(nr, uni) {
     .Call(`_nativeshadr_test_gradient`, nr, uni)
 }
 
-shdr_sandy <- function(nr, lacunarity, gain, intensity) {
-    .Call(`_nativeshadr_shdr_sandy`, nr, lacunarity, gain, intensity)
+shdr_sandy <- function(nr, lacunarity, gain, intensity, octaves, time) {
+    .Call(`_nativeshadr_shdr_sandy`, nr, lacunarity, gain, intensity, octaves, time)
 }
 
 shdr_asciifilter <- function(nr, uni) {

@@ -12,7 +12,8 @@ godray(
   gain = 0.5,
   lacunarity = 2.5,
   alpha = 1,
-  time = 1
+  octaves = 5,
+  time = 0
 )
 }
 \arguments{
@@ -32,6 +33,8 @@ If \code{parallel} is \code{TRUE}, this is ignored.}
 \item{lacunarity}{A numeric scalar; the lacunarity of the effect.}
 
 \item{alpha}{A numeric scalar; the alpha of the effect.}
+
+\item{octaves}{A numeric scalar; the octaves of turbulence.}
 
 \item{time}{A numeric scalar; ellapsed time.}
 }

@@ -1,12 +1,17 @@
 #' Retro look effect
 #'
 #' @param nr A `nativeRaster` object.
-#' @param asp A numeric vector of length 2; factor to change the offset of vignette effect.
+#' @param asp A numeric vector of length 2; factor to scale the offset of vignette effect.
 #' @param distort A logical scalar; whether to apply barrel distortion.
 #' @param time A numeric scalar; ellapsed time.
 #' @returns A `nativeRaster` object.
 #' @export
-retro_filter <- function(nr, asp = rev(dim(nr) / 100), distort = TRUE, time = 0) {
+retro_filter <- function(
+  nr,
+  asp = rev(dim(nr) / 100),
+  distort = TRUE,
+  time = 0
+) {
   if (!all(is.finite(c(asp[1:2], time[1])))) {
     cli::cli_abort("uniforms must be finite numerics.")
   }

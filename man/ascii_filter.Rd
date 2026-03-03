@@ -4,12 +4,15 @@
 \alias{ascii_filter}
 \title{ASCII filter}
 \usage{
-ascii_filter(nr, sc_factor = 128, intensity = 0.2)
+ascii_filter(nr, sc_factor = 128, intensity = 0.8)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
 \item{sc_factor}{A numeric scalar; the scale factor.}
+
+\item{intensity}{A numeric scalar; the intensity of filter edge.
+Set to \code{0} to disable the filter.}
 }
 \value{
 A \code{nativeRaster} object.
