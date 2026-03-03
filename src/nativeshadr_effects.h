@@ -99,6 +99,44 @@ inline float1 turb(float3 P, float3 rep, float lacunarity, float gain) {
 
 namespace Effects {
 
+inline uint32_t ascii_filter(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
+  const std::vector<double>& uScale = uniforms[0];
+  const std::vector<double>& uIntensity = uniforms[1];
+
+  const double intensity = clamp(float1(uIntensity[0]), 0.0, 1.0);
+
+  const auto character = [&intensity](float n, float2 p) {
+    p = floor(p * float2(4.0, 4.0) + 2.5);
+    if (clamp(p.x, 0.0, 4.0) == p.x) {
+      if (clamp(p.y, 0.0, 4.0) == p.y) {
+        if (int(fmod(n / exp2(p.x + 5.0 * p.y), 2.0)) == 1) {
+          return 1.0;
+        }
+      }
+    }
+    return intensity;
+  };
+
+  float2 uv = float2(wh) / float2(nr.ncol(), nr.nrow());
+  float4 color = texture(nr, uv);
+  float pixelSize = 1.0 / uScale[0];
+
+  float gray = 0.3 * color.r + 0.59 * color.g + 0.11 * color.b;
+
+  float n = 65536.0;               // .
+  if (gray > 0.2) n = 65600.0;     // :
+  if (gray > 0.3) n = 332772.0;    // *
+  if (gray > 0.4) n = 15255086.0;  // o
+  if (gray > 0.5) n = 23385164.0;  // &
+  if (gray > 0.6) n = 15252014.0;  // 8
+  if (gray > 0.7) n = 13199452.0;  // @
+  if (gray > 0.8) n = 11512810.0;  // #
+
+  float2 p = fmod(uv / (pixelSize * 0.5), 2.0) - float2(1.0);
+  color.rgb *= character(n, p);
+  return int4_to_icol(clamp(color, 0, 1) * 255);
+}
+
 inline uint32_t deform(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
   const std::vector<double> uAmplitude = uniforms[0];  // vec2
   const std::vector<double> uFreq = uniforms[1];       // vec2
@@ -114,6 +152,63 @@ inline uint32_t deform(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
   float4 deformedColor = texture(nr, uv);
 
   return int4_to_icol(deformedColor * 255);
+}
+
+// Adapted from <https://sayachang-bot.hateblo.jp/entry/2019/12/11/231351>
+inline uint32_t retro_filter(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
+  const std::vector<double>& uAspect = uniforms[0];  // vec2
+  const std::vector<double>& uDistort = uniforms[1];
+  const std::vector<double>& uTime = uniforms[2];
+
+  const float2 crtOffset = float2(uAspect[0], uAspect[1]);
+
+  const auto barrel = [](float2 uv) {
+    float s1 = .999, s2 = .125;
+    float2 centre = 2. * uv - 1.;
+    float barrel = min(1.0 - length(centre) * s1, float1(1.0)) * s2;
+    return uv - centre * barrel;
+  };
+  const auto CRT = [&crtOffset](float2 uv) {
+    float2 nu = uv * 2. - 1.;
+    float2 offset = abs(nu.yx) / crtOffset;
+    nu += nu * offset * offset;
+    return nu;
+  };
+  const auto Scanline = [](float2 uv, double uTime) {
+    float scanline = clamp(
+        0.95 + 0.05 * cos(3.14 * (uv.y + 0.008 * floor(uTime * 15.) / 15.) *
+                          240.0 * 1.0),
+        0.0, 1.0);
+    float grille =
+        0.85 + 0.15 * clamp(1.5 * cos(3.14 * uv.x * 640.0 * 1.0), 0.0, 1.0);
+    return scanline * grille * 1.2;
+  };
+
+  float2 i = float2(wh) / float2(nr.ncol(), nr.nrow());
+
+  // barrel distortion
+  float2 p = uDistort[0] > 0.0 ? barrel(i.xy) : i.xy;
+  float4 col = texture(nr, p);
+
+  // color grading
+  col.rgb *= float3(1.25, 0.95, 0.7);
+  col.rgb = clamp(col.rgb, 0.0, 1.0);
+  col.rgb = col.rgb * col.rgb * (3.0 - 2.0 * col.rgb);
+  col.rgb = 0.5 + 0.5 * col.rgb;
+
+  // scanline
+  col.rgb *= Scanline(p, uTime[0]);
+
+  // crt monitor
+  float2 crt = CRT(p);
+  crt = abs(crt);
+  crt = pow(crt, 15.);
+  col.rgba = lerp(col.rgba, float1(0.0).xxxx, (crt.x + crt.y).xxxx);
+
+  // gammma correction
+  col.rgb = pow(col.rgb, float1(.4545).xxx);
+
+  return int4_to_icol(clamp(col, 0, 1) * 255);
 }
 
 inline uint32_t godray(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
@@ -211,9 +306,11 @@ inline uint32_t shockwave(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
   const float uBrightness = uWave[2];
   const float uRadius = uWave[3];
 
-  const float halfWavelength = uWavelength * 0.5 / max(uInputSize[0], uInputSize[1]);
+  const float halfWavelength =
+      uWavelength * 0.5 / max(uInputSize[0], uInputSize[1]);
   const float maxRadius = uRadius / max(uInputSize[0], uInputSize[1]);
-  const float currentRadius = uTime[0] * uSpeed[0] / max(uInputSize[0], uInputSize[1]);
+  const float currentRadius =
+      uTime[0] * uSpeed[0] / max(uInputSize[0], uInputSize[1]);
 
   const float2 vTextureCoord = float2(wh) / float2(nr.ncol(), nr.nrow());
 
@@ -227,8 +324,8 @@ inline uint32_t shockwave(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
     fade = 1.0 - pow(currentRadius / maxRadius, 2.0);
   }
 
-  float2 dir =
-      float2(vTextureCoord - float2(uCenter[0], uCenter[1]) / float2(uInputSize[0], uInputSize[1]));
+  float2 dir = float2(vTextureCoord - float2(uCenter[0], uCenter[1]) /
+                                          float2(uInputSize[0], uInputSize[1]));
   dir.y *= uInputSize[1] / uInputSize[0];
   float dist = length(dir);
 

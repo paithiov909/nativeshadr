@@ -41,6 +41,12 @@ Rcpp::IntegerVector shdr_sandy(Rcpp::IntegerMatrix nr, float lacunarity,
 }
 
 // [[Rcpp::export]]
+Rcpp::IntegerVector shdr_asciifilter(Rcpp::IntegerMatrix nr, Rcpp::List uni) {
+  const vvd uniforms = {uni["uScale"], uni["uIntensity"]};
+  return vectorize_shader(Effects::ascii_filter)(nr, uniforms);
+}
+
+// [[Rcpp::export]]
 Rcpp::IntegerVector shdr_deform(Rcpp::IntegerMatrix nr, Rcpp::List uni) {
   const vvd uniforms = {uni["uAmplitude"], uni["uFreq"]};
   return vectorize_shader(Effects::deform)(nr, uniforms);
@@ -53,6 +59,12 @@ Rcpp::IntegerVector shdr_godray(Rcpp::IntegerMatrix nr, Rcpp::List uni) {
   const vvd uniforms = {{w, h},       uni["uParallel"], uni["uLight"], {h / w},
                         uni["uTime"], uni["uRay"],      {w, h, 0, 0}};
   return vectorize_shader(Effects::godray)(nr, uniforms);
+}
+
+// [[Rcpp::export]]
+Rcpp::IntegerVector shdr_retrofilter(Rcpp::IntegerMatrix nr, Rcpp::List uni) {
+  const vvd uniforms = {uni["uAspect"], uni["uDistort"], uni["uTime"]};
+  return vectorize_shader(Effects::retro_filter)(nr, uniforms);
 }
 
 // [[Rcpp::export]]

@@ -13,12 +13,20 @@ shdr_sandy <- function(nr, lacunarity, gain, intensity) {
     .Call(`_nativeshadr_shdr_sandy`, nr, lacunarity, gain, intensity)
 }
 
+shdr_asciifilter <- function(nr, uni) {
+    .Call(`_nativeshadr_shdr_asciifilter`, nr, uni)
+}
+
 shdr_deform <- function(nr, uni) {
     .Call(`_nativeshadr_shdr_deform`, nr, uni)
 }
 
 shdr_godray <- function(nr, uni) {
     .Call(`_nativeshadr_shdr_godray`, nr, uni)
+}
+
+shdr_retrofilter <- function(nr, uni) {
+    .Call(`_nativeshadr_shdr_retrofilter`, nr, uni)
 }
 
 shdr_rgb_split <- function(nr, uni) {
