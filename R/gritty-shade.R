@@ -8,7 +8,14 @@
 #' @param time A numeric scalar; ellapsed time.
 #' @returns A `nativeRaster` object.
 #' @export
-gritty_shade <- function(nr, lacunarity = 2, gain = 1.2, intensity = 0.4, octaves = 5, time = 0) {
+gritty_shade <- function(
+  nr,
+  lacunarity = 2,
+  gain = 1.2,
+  intensity = 0.4,
+  octaves = 5,
+  time = 0
+) {
   if (!all(is.finite(c(lacunarity, gain, intensity, octaves, time)))) {
     cli::cli_abort("uniforms must be finite numerics.")
   }
