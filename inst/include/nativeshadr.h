@@ -15,7 +15,8 @@ inline int4 icol_to_int4(uint32_t icol) {
 }
 
 inline uint32_t int4_to_icol(int4 col) {
-  return col.x | (col.y << 8) | (col.z << 16) | (col.w << 24);
+  return ((uint8_t)col.w << 24) | ((uint8_t)col.z << 16) |
+         ((uint8_t)col.y << 8) | (uint8_t)col.x;
 }
 
 inline int4 texture_eval(const RcppParallel::RMatrix<int>& nr, const int2& wh) {

@@ -1,5 +1,4 @@
 ## usethis namespace: start
-#' @import nara
 #' @importFrom Rcpp sourceCpp
 #' @importFrom RcppParallel RcppParallelLibs
 #' @useDynLib nativeshadr, .registration = TRUE
@@ -7,10 +6,19 @@
 #' @keywords internal
 "_PACKAGE"
 
-#' @inherit nara::nr_new title description details return
-#' @inheritParams nara::nr_new
-#' @export
+#' Create a native raster filled with a color
+#'
+#' @param color Color name or hex code.
+#' @param width,height A positive integer scalar.
+#' @returns A `nativeRaster` object.
 #' @keywords internal
-nr_new <- function(width, height, fill = "white") {
-  nara::nr_new(width, height, fill)
+fill_with <- function(color, width, height) {
+  packed_int <- colorfast::col_to_int(color[1])
+  out <- matrix(packed_int, nrow = height, ncol = width)
+  class(out) <- "nativeRaster"
+  out
+}
+
+clamp <- function(x, min, max) {
+  pmin(pmax(x, min), max)
 }
