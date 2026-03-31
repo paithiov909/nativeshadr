@@ -1,6 +1,6 @@
 Package: nativeshadr
 Title: Introduction of 'HLSL' Syntax to 'Rcpp'
-Version: 0.0.4.9001
+Version: 0.0.4.9002
 Authors@R: c(
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre")),
     person("Emilio", "López", role = "cph",
@@ -11,7 +11,7 @@ Description: Brings 'HLSL'-like syntax to 'Rcpp' codes via the 'HLSL++'
 License: MIT + file LICENSE
 Imports:
     cli,
-    nara,
+    colorfast,
     Rcpp,
     RcppParallel
 Suggests:
@@ -21,8 +21,6 @@ Suggests:
 LinkingTo:
     Rcpp,
     RcppParallel
-Remotes:
-    coolbutuseless/nara
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
