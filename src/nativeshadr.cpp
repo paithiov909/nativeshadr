@@ -88,7 +88,7 @@ Rcpp::IntegerVector shdr_shockwave(Rcpp::IntegerMatrix nr, Rcpp::List uni) {
   const double w = static_cast<double>(nr.ncol());
   const double h = static_cast<double>(nr.nrow());
   const vvd uniforms = {uni["uCenter"], uni["uTime"], uni["uSpeed"],
-                        uni["uWave"],   {w, h, 0, 0}, {0, 0, 1, 1}};
+                        uni["uWave"],   {w, h, 0, 0}, {0, 0, .996, .996}};
   return vectorize_shader(Effects::shockwave)(nr, uniforms);
 }
 

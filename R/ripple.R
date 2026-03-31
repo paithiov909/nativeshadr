@@ -10,7 +10,7 @@
 #' @param amp A numeric scalar; the amplitude of the effect.
 #' @returns A `nativeRaster` object.
 #' @export
-ripple <- function(nr, center = dim(nr) / 2, freq = 50, amp = 0.01) {
+ripple <- function(nr, center = rev(dim(nr)) / 2, freq = 50, amp = 0.01) {
   if (!all(is.finite(c(center[1:2], freq, amp)))) {
     cli::cli_abort("uniforms must be finite numerics.")
   }

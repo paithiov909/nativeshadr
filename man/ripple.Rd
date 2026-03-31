@@ -4,7 +4,7 @@
 \alias{ripple}
 \title{Ripple effect}
 \usage{
-ripple(nr, center = dim(nr)/2, freq = 50, amp = 0.01)
+ripple(nr, center = rev(dim(nr))/2, freq = 50, amp = 0.01)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}

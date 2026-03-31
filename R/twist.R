@@ -13,7 +13,7 @@ twist <- function(
   offset = rev(dim(nr)) / 2,
   angle = pi,
   radius = 100,
-  padding = 20
+  padding = 0
 ) {
   if (!all(is.finite(c(angle, offset[1:2], radius, padding)))) {
     cli::cli_abort("uniforms must be finite numerics.")
