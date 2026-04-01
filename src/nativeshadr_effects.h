@@ -80,7 +80,7 @@ inline float1 pnoise(float3 P, float3 rep) {
   float4 n_z = lerp(float4(n000, n100, n010, n110),
                     float4(n001, n101, n011, n111), fade_xyz.zzzz);
   float2 n_yz = lerp(n_z.xy, n_z.zw, fade_xyz.yy);
-  float1 n_xyz = lerp(n_yz.x, n_yz.y, fade_xyz.x);
+  float1 n_xyz = hlslpp::lerp(n_yz.x, n_yz.y, fade_xyz.x);
   return 2.2 * n_xyz;
 }
 inline float1 turb(float octaves, float3 P, float3 rep, float lacunarity,
