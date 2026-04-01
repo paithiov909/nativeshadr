@@ -5,3 +5,4 @@
 ^LICENSE\.md$
 ^README\.qmd$
 ^cran-comments\.md$
+^\.github$
