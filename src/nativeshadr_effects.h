@@ -251,7 +251,7 @@ inline uint32_t godray(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
   float1 noise =
       Perlin::turb(octaves, dir + float3(time, 0.0, 62.1 + time) * 0.05,
                    float3(480.0, 320.0, 480.0), lacunarity, gain);
-  noise = lerp(noise, 0.0, 0.3);
+  noise = lerp(noise, float1(0.0), float1(0.3));
   // fade vertically
   float4 mist = float4(noise.xxx * (1.0 - coord.y), 1.0);
   // apply user alpha

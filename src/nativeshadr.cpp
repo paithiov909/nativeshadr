@@ -33,8 +33,8 @@ Rcpp::IntegerVector shdr_sandy(Rcpp::IntegerMatrix nr, float lacunarity,
     float2 uv = float2(wh) / float2(nr.ncol(), nr.nrow());
     float4 col = texture(nr, uv);
     float3 rep = float3(uv.x, uv.y, time);
-    float1 t = lerp(1 + Perlin::turb(_octaves, col.xyz, rep, lacunarity, gain),
-                    0.0, _intensity);
+    float1 t = lerp(1.0 + Perlin::turb(_octaves, col.xyz, rep, lacunarity, gain),
+                    float1(0.0), _intensity);
     col.rgb *= t.xxx;
     return int4_to_icol(clamp(col * 255, 0, 255));
   };
