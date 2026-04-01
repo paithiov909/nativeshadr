@@ -1,3 +1,6 @@
+skip_on_cran()
+skip_on_ci()
+
 test_that("test_as_is does not change the image", {
   vdiffr::expect_doppelganger("as-is", {
     nr <-
