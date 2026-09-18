@@ -1,13 +1,6 @@
 // [[Rcpp::depends(RcppParallel)]]
 #include "nativeshadr.h"
 
-inline float4 texture(const RMatrix<int>& nr, const float2& uv) {
-  const int2 wh{uv.x * nr.ncol(), uv.y * nr.nrow()};
-  float4 _texture = texture_eval(nr, wh);
-  _texture /= 255;
-  return _texture;
-}
-
 namespace Perlin {
 
 inline float3 mod289(float3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -153,63 +146,6 @@ inline uint32_t deform(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
   float4 deformedColor = texture(nr, uv);
 
   return int4_to_icol(deformedColor * 255);
-}
-
-// Adapted from <https://sayachang-bot.hateblo.jp/entry/2019/12/11/231351>
-inline uint32_t retro_filter(int2 wh, RMatrix<int> nr, const vvd& uniforms) {
-  const std::vector<double>& uAspect = uniforms[0];  // vec2
-  const std::vector<double>& uDistort = uniforms[1];
-  const std::vector<double>& uTime = uniforms[2];
-
-  const float2 crtOffset = float2(uAspect[0], uAspect[1]);
-
-  const auto barrel = [](float2 uv) {
-    float s1 = .999, s2 = .125;
-    float2 centre = 2. * uv - 1.;
-    float barrel = min(1.0 - length(centre) * s1, float1(1.0)) * s2;
-    return uv - centre * barrel;
-  };
-  const auto CRT = [&crtOffset](float2 uv) {
-    float2 nu = uv * 2. - 1.;
-    float2 offset = abs(nu.yx) / crtOffset;
-    nu += nu * offset * offset;
-    return nu;
-  };
-  const auto Scanline = [](float2 uv, double uTime) {
-    float scanline = clamp(
-        0.95 + 0.05 * cos(3.14 * (uv.y + 0.008 * floor(uTime * 15.) / 15.) *
-                          240.0 * 1.0),
-        0.0, 1.0);
-    float grille =
-        0.85 + 0.15 * clamp(1.5 * cos(3.14 * uv.x * 640.0 * 1.0), 0.0, 1.0);
-    return scanline * grille * 1.2;
-  };
-
-  float2 i = float2(wh) / float2(nr.ncol(), nr.nrow());
-
-  // barrel distortion
-  float2 p = uDistort[0] > 0.0 ? barrel(i.xy) : i.xy;
-  float4 col = texture(nr, p);
-
-  // color grading
-  col.rgb *= float3(1.25, 0.95, 0.7);
-  col.rgb = clamp(col.rgb, 0.0, 1.0);
-  col.rgb = col.rgb * col.rgb * (3.0 - 2.0 * col.rgb);
-  col.rgb = 0.5 + 0.5 * col.rgb;
-
-  // scanline
-  col.rgb *= Scanline(p, uTime[0]);
-
-  // crt monitor
-  float2 crt = CRT(p);
-  crt = abs(crt);
-  crt = pow(crt, 15.);
-  col.rgba = lerp(col.rgba, float1(0.0).xxxx, (crt.x + crt.y).xxxx);
-
-  // gammma correction
-  col.rgb = pow(col.rgb, float1(.4545).xxx);
-
-  return int4_to_icol(clamp(col, 0, 1) * 255);
 }
 
 inline uint32_t godray(int2 wh, RMatrix<int> nr, const vvd& uniforms) {

@@ -66,12 +66,6 @@ Rcpp::IntegerVector shdr_godray(Rcpp::IntegerMatrix nr, Rcpp::List uni) {
 }
 
 // [[Rcpp::export]]
-Rcpp::IntegerVector shdr_retrofilter(Rcpp::IntegerMatrix nr, Rcpp::List uni) {
-  const vvd uniforms = {uni["uAspect"], uni["uDistort"], uni["uTime"]};
-  return vectorize_shader(Effects::retro_filter)(nr, uniforms);
-}
-
-// [[Rcpp::export]]
 Rcpp::IntegerVector shdr_rgb_split(Rcpp::IntegerMatrix nr, Rcpp::List uni) {
   const vvd uniforms = {uni["uRed"], uni["uGreen"], uni["uBlue"]};
   return vectorize_shader(Effects::rgb_split)(nr, uniforms);

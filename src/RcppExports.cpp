@@ -87,18 +87,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// shdr_retrofilter
-Rcpp::IntegerVector shdr_retrofilter(Rcpp::IntegerMatrix nr, Rcpp::List uni);
-RcppExport SEXP _nativeshadr_shdr_retrofilter(SEXP nrSEXP, SEXP uniSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::IntegerMatrix >::type nr(nrSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type uni(uniSEXP);
-    rcpp_result_gen = Rcpp::wrap(shdr_retrofilter(nr, uni));
-    return rcpp_result_gen;
-END_RCPP
-}
 // shdr_rgb_split
 Rcpp::IntegerVector shdr_rgb_split(Rcpp::IntegerMatrix nr, Rcpp::List uni);
 RcppExport SEXP _nativeshadr_shdr_rgb_split(SEXP nrSEXP, SEXP uniSEXP) {
@@ -156,7 +144,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_nativeshadr_shdr_asciifilter", (DL_FUNC) &_nativeshadr_shdr_asciifilter, 2},
     {"_nativeshadr_shdr_deform", (DL_FUNC) &_nativeshadr_shdr_deform, 2},
     {"_nativeshadr_shdr_godray", (DL_FUNC) &_nativeshadr_shdr_godray, 2},
-    {"_nativeshadr_shdr_retrofilter", (DL_FUNC) &_nativeshadr_shdr_retrofilter, 2},
     {"_nativeshadr_shdr_rgb_split", (DL_FUNC) &_nativeshadr_shdr_rgb_split, 2},
     {"_nativeshadr_shdr_ripple", (DL_FUNC) &_nativeshadr_shdr_ripple, 2},
     {"_nativeshadr_shdr_shockwave", (DL_FUNC) &_nativeshadr_shdr_shockwave, 2},

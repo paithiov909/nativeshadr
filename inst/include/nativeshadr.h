@@ -27,6 +27,13 @@ inline int4 texture_eval(const RcppParallel::RMatrix<int>& nr, const int2& wh) {
   return ret;
 }
 
+inline float4 texture(const RMatrix<int>& nr, const float2& uv) {
+  const int2 wh{uv.x * nr.ncol(), uv.y * nr.nrow()};
+  float4 _texture = texture_eval(nr, wh);
+  _texture /= 255;
+  return _texture;
+}
+
 inline std::function<Rcpp::IntegerVector(Rcpp::IntegerMatrix, const vvd&)>
 vectorize_shader(
     std::function<uint32_t(int2, RcppParallel::RMatrix<int>, const vvd&)>

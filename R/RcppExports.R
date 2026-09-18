@@ -25,10 +25,6 @@ shdr_godray <- function(nr, uni) {
     .Call(`_nativeshadr_shdr_godray`, nr, uni)
 }
 
-shdr_retrofilter <- function(nr, uni) {
-    .Call(`_nativeshadr_shdr_retrofilter`, nr, uni)
-}
-
 shdr_rgb_split <- function(nr, uni) {
     .Call(`_nativeshadr_shdr_rgb_split`, nr, uni)
 }

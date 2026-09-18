@@ -11,6 +11,11 @@ Brings 'HLSL'-like syntax to 'Rcpp' codes via the 'HLSL++' library \url{https://
 \author{
 \strong{Maintainer}: Akiru Kato \email{paithiov909@gmail.com}
 
+Authors:
+\itemize{
+  \item Akiru Kato \email{paithiov909@gmail.com}
+}
+
 Other contributors:
 \itemize{
   \item Emilio López (Author of the 'HLSL++' library) [copyright holder]
